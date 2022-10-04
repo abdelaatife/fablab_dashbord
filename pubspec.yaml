@@ -25,6 +25,7 @@ dependencies:
   side_navigation: ^1.0.2
   flutter_form_builder: ^7.6.0
   flutter_filereader: ^3.0.0
+  cloud_firestore: ^3.5.0
 
 dev_dependencies:
   flutter_test:

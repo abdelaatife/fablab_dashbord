@@ -15,9 +15,6 @@ class DashbordPage extends StatelessWidget {
         dashbordeControllerImpl =
         Get.put(DashbordeControllerImpl());
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Dashbord'),
-      ),
       body: GetBuilder<DashbordeControllerImpl>(
         init: dashbordeControllerImpl,
         builder: (controller) {

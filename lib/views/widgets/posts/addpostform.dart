@@ -27,14 +27,43 @@ class AppAddPostForm extends StatelessWidget {
                     return Wrap(
                       children: [
                         Column(
-                          children: const [
-                            AppInputForm(
+                          children: [
+                            Row(
+                              children: const [
+                                Icon(
+                                  Icons
+                                      .add_circle_outline,
+                                  color: AppColor
+                                      .secondry,
+                                  size: 30,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                    "Creat New Post",
+                                    style: TextStyle(
+                                        fontFamily:
+                                            AppText
+                                                .light,
+                                        fontSize:
+                                            20,
+                                        fontWeight:
+                                            FontWeight
+                                                .w600)),
+                              ],
+                            ),
+                            SizedBox(
+                              height: Get.height *
+                                  .08,
+                            ),
+                            const AppInputForm(
                               label: "User Name",
                               icon: Icons.person,
                               helper:
                                   "Enter the name of the project manager",
                             ),
-                            AppInputForm(
+                            const AppInputForm(
                               label:
                                   "Project Name",
                               icon: Icons
@@ -54,8 +83,34 @@ class AppAddPostForm extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Column(
-                            children: const [
-                              AppInputForm(
+                            children: [
+                              Row(
+                                children: const [
+                                  Icon(
+                                    Icons
+                                        .add_circle_outline,
+                                    color: AppColor
+                                        .secondry,
+                                    size: 30,
+                                  ),
+                                  Text(
+                                      "Creat New Post",
+                                      style: TextStyle(
+                                          fontFamily:
+                                              AppText
+                                                  .light,
+                                          fontSize:
+                                              20,
+                                          fontWeight:
+                                              FontWeight.w600)),
+                                ],
+                              ),
+                              SizedBox(
+                                height:
+                                    Get.height *
+                                        .08,
+                              ),
+                              const AppInputForm(
                                 label:
                                     "User Name",
                                 icon:
@@ -63,7 +118,7 @@ class AppAddPostForm extends StatelessWidget {
                                 helper:
                                     "Enter the name of the project manager",
                               ),
-                              AppInputForm(
+                              const AppInputForm(
                                 label:
                                     "Project Name",
                                 icon: Icons
@@ -95,7 +150,9 @@ class AppAddPostForm extends StatelessWidget {
               children: [
                 AppCusstomButton(
                   label: "Cancel",
-                  onTap: () {},
+                  onTap: () {
+                    Get.back();
+                  },
                   color: Colors.white,
                   textColor: Colors.black,
                 ),

@@ -52,13 +52,19 @@ class AppImagePicker extends StatelessWidget {
                 )
               : Column(
                   children: [
-                    Text('Select Image',
-                        style: TextStyle(
-                            fontSize: 17,
-                            color: Colors.black
-                                .withOpacity(.5),
-                            fontFamily:
-                                AppText.light)),
+                    Container(
+                      margin:
+                          const EdgeInsets.only(
+                              top: 50),
+                      child: Text('Select Image',
+                          style: TextStyle(
+                              fontSize: 17,
+                              color: Colors.black
+                                  .withOpacity(
+                                      .5),
+                              fontFamily:
+                                  AppText.light)),
+                    ),
                     InkWell(
                       onTap: () {
                         filepickerController
@@ -69,7 +75,7 @@ class AppImagePicker extends StatelessWidget {
                             const EdgeInsets.only(
                                 left: 30,
                                 top: 10,
-                                bottom: 20),
+                                bottom: 0),
                         padding:
                             const EdgeInsets.only(
                                 top: 5),

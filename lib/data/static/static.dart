@@ -1,4 +1,5 @@
-import 'package:fabdashboard/views/screens/newpost.dart';
+import 'package:fabdashboard/views/screens/newPost/newpost.dart';
+import 'package:fabdashboard/views/screens/newPost/posts_page.dart';
 import 'package:flutter/material.dart';
 import 'package:side_navigation/side_navigation.dart';
 
@@ -21,7 +22,7 @@ List<SideNavigationBarItem> items = const [
   ),
 ];
 List<Widget> screens = const [
-  NewPostPage(),
+  PostsPage(),
   Center(
     child: Text('New Notification'),
   ),

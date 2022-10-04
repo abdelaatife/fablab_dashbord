@@ -1,6 +1,9 @@
-import 'dart:io';
+// ignore_for_file: avoid_web_libraries_in_flutter
+
+import 'dart:html';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 abstract class FilepickerController
@@ -33,6 +36,16 @@ class FilepickerControllerImpl
       }
       isSelected = true;
       update();
+    } else {
+      isSelected = false;
+      update();
+      Get.snackbar(
+        'Error',
+        'No file selected',
+        snackPosition: SnackPosition.TOP,
+        colorText: Colors.white,
+        backgroundColor: Colors.red,
+      );
     }
   }
 }
