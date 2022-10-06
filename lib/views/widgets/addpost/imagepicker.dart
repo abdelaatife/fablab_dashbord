@@ -20,34 +20,30 @@ class AppImagePicker extends StatelessWidget {
               ? Padding(
                   padding:
                       const EdgeInsets.all(8.0),
-                  child: Expanded(
-                    child: Column(
-                      mainAxisAlignment:
-                          MainAxisAlignment
-                              .center,
-                      children: [
-                        Text(
-                          "${controller.files.length} Images",
-                          textAlign:
-                              TextAlign.center,
-                          style: const TextStyle(
-                              fontFamily:
-                                  AppText.light),
-                        ),
-                        TextButton(
-                            onPressed: () {
-                              controller
-                                  .pickFile();
-                            },
-                            child: const Text(
-                              "Change?",
-                              style: TextStyle(
-                                  fontFamily:
-                                      AppText
-                                          .light),
-                            ))
-                      ],
-                    ),
+                  child: Column(
+                    mainAxisAlignment:
+                        MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "${controller.itemImagesList.length} Images",
+                        textAlign:
+                            TextAlign.center,
+                        style: const TextStyle(
+                            fontFamily:
+                                AppText.light),
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            controller.pickFile();
+                          },
+                          child: const Text(
+                            "Change?",
+                            style: TextStyle(
+                                fontFamily:
+                                    AppText
+                                        .light),
+                          ))
+                    ],
                   ),
                 )
               : Column(

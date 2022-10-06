@@ -1,6 +1,7 @@
-import 'package:fabdashboard/views/widgets/posts/coustembutton.dart';
-import 'package:fabdashboard/views/widgets/posts/imagepicker.dart';
-import 'package:fabdashboard/views/widgets/posts/inputform.dart';
+import 'package:fabdashboard/controller/addpost_controller.dart';
+import 'package:fabdashboard/views/widgets/addpost/coustembutton.dart';
+import 'package:fabdashboard/views/widgets/addpost/imagepicker.dart';
+import 'package:fabdashboard/views/widgets/addpost/inputform.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -12,6 +13,8 @@ class AppAddPostForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AddPostControllerImpl addPostController =
+        Get.put(AddPostControllerImpl());
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.all(30),
@@ -57,13 +60,19 @@ class AppAddPostForm extends StatelessWidget {
                               height: Get.height *
                                   .08,
                             ),
-                            const AppInputForm(
+                            AppInputForm(
+                              controller:
+                                  addPostController
+                                      .usernameController,
                               label: "User Name",
                               icon: Icons.person,
                               helper:
                                   "Enter the name of the project manager",
                             ),
-                            const AppInputForm(
+                            AppInputForm(
+                              controller:
+                                  addPostController
+                                      .titleController,
                               label:
                                   "Project Name",
                               icon: Icons
@@ -110,7 +119,10 @@ class AppAddPostForm extends StatelessWidget {
                                     Get.height *
                                         .08,
                               ),
-                              const AppInputForm(
+                              AppInputForm(
+                                controller:
+                                    addPostController
+                                        .usernameController,
                                 label:
                                     "User Name",
                                 icon:
@@ -118,7 +130,10 @@ class AppAddPostForm extends StatelessWidget {
                                 helper:
                                     "Enter the name of the project manager",
                               ),
-                              const AppInputForm(
+                              AppInputForm(
+                                controller:
+                                    addPostController
+                                        .titleController,
                                 label:
                                     "Project Name",
                                 icon: Icons
@@ -138,7 +153,9 @@ class AppAddPostForm extends StatelessWidget {
                 },
               ),
             ),
-            const AppInputForm(
+            AppInputForm(
+              controller: addPostController
+                  .descriptionController,
               label: "Description",
               icon: Icons.description_outlined,
               maxLines: 5,
@@ -158,7 +175,10 @@ class AppAddPostForm extends StatelessWidget {
                 ),
                 AppCusstomButton(
                   label: "Add Post",
-                  onTap: () {},
+                  onTap: () {
+                    addPostController
+                        .validateData();
+                  },
                   color: AppColor.secondry,
                   textColor: Colors.white,
                 )

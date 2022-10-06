@@ -12,7 +12,8 @@ class AppCusstomButton extends StatelessWidget {
       {Key? key,
       required this.label,
       required this.onTap,
-      required this.color, required this.textColor})
+      required this.color,
+      required this.textColor})
       : super(key: key);
 
   @override
@@ -31,7 +32,7 @@ class AppCusstomButton extends StatelessWidget {
           child: Center(
             child: Text(
               label,
-              style:   TextStyle(
+              style: TextStyle(
                   color: textColor,
                   fontFamily: AppText.light),
             ),

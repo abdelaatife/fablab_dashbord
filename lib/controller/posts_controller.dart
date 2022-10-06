@@ -1,40 +1,42 @@
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 abstract class PostsController
     extends GetxController {
+  // firebase firestore and firebase storage variables
   FirebaseFirestore firestore =
       FirebaseFirestore.instance;
-  CollectionReference posts = FirebaseFirestore
-      .instance
-      .collection('posts');
+  final CollectionReference posts =
+      FirebaseFirestore.instance
+          .collection('posts');
+  final Reference storageRef =
+      FirebaseStorage.instance.ref("posts");
+
   final Stream<QuerySnapshot> collectionStream =
       FirebaseFirestore.instance
           .collection('posts')
           .snapshots();
-  getPostData();
-  likeCounter( bool isLiked , String postId);
+  deletePost(String postId);
 }
 
 class PostsControllerImpl
     extends PostsController {
+  //delete post
   @override
-  getPostData() {}
-
-  @override
-  likeCounter(isLiked , postId) {
-    if (isLiked) {
-      posts.doc(postId).update({
-        'likes': FieldValue.increment(-1),
-      });
-      return Future.value(!isLiked);
-      
-    } else {
-      posts.doc('DRiMNaMbVKzMOKOvs8Ho').update({
-        'likes': FieldValue.increment(1),
-      });
-      return Future.value(!isLiked);
-      
-    }
+  deletePost(String postId) async {
+    //delete post from firebase storage
+    await storageRef.child(postId).listAll().then(
+          (value) => value.items.forEach(
+            (element) {
+              element.delete();
+            },
+          ),
+        );
+    //delete post from firebase firestore
+    posts
+        .doc(postId)
+        .delete()
+        .then((value) => Get.back());
   }
 }

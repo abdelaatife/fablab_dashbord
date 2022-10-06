@@ -1,51 +1,95 @@
-// ignore_for_file: avoid_web_libraries_in_flutter
-
-import 'dart:html';
-
-import 'package:file_picker/file_picker.dart';
-import 'package:flutter/material.dart';
+import 'dart:io' show File;
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:uuid/uuid.dart';
 
 abstract class FilepickerController
     extends GetxController {
-  late String fileName;
-  late File file;
-  late bool isFilePicked = false;
-  late List<PlatformFile> files = [];
-  late bool isSelected = false;
-
+  //image picker variable for selecting image from gallery
+  final ImagePicker picker = ImagePicker();
+  List<XFile>? photo = <XFile>[];
+  List<XFile> itemImagesList = <XFile>[];
+  List<String> downloadUrl = <String>[];
+  bool isSelected = false;
+  File? file;
+  PickedFile? pickedFile;
+  bool uploading = false;
+  // uuid generator
+  String? pId = const Uuid().v4();
+  // bool uploading
+  bool isUploading = false;
+  //function to select image and add it to firebase storage
+  uploadImageToStorage(
+      PickedFile? pickedFile, String postId);
+  uplaodImageAndSaveItemInfo(String postId);
   pickFile();
 }
 
+// pick image
 class FilepickerControllerImpl
     extends FilepickerController {
+  // pick image function
   @override
   pickFile() async {
-    files.clear();
-    FilePickerResult? result =
-        await FilePicker.platform.pickFiles(
-      allowMultiple: true,
-      type: FileType.custom,
-      withReadStream: true,
-      allowedExtensions: ['jpg', 'png', 'jpeg'],
-    );
+    if (kIsWeb) {
+      downloadUrl.clear();
+      itemImagesList.clear();
+      photo = await picker.pickMultiImage();
+      if (photo != null) {
+        itemImagesList = itemImagesList + photo!;
+        isSelected = true;
 
-    if (result != null) {
-      for (var element in result.files) {
-        files.add(element);
+        photo!.clear();
+        update();
       }
-      isSelected = true;
-      update();
-    } else {
-      isSelected = false;
-      update();
-      Get.snackbar(
-        'Error',
-        'No file selected',
-        snackPosition: SnackPosition.TOP,
-        colorText: Colors.white,
-        backgroundColor: Colors.red,
-      );
     }
+  }
+
+// preprossesing picked image
+  @override
+  uplaodImageAndSaveItemInfo(postId) async {
+    uploading = true;
+    update();
+
+    for (XFile image in itemImagesList) {
+      file = File(image.path);
+      pickedFile = PickedFile(file!.path);
+
+      // for each image in the list upload it to firebase storage
+      await uploadImageToStorage(
+          pickedFile, postId);
+    }
+    // then add download url to firebase firestore
+    FirebaseFirestore.instance
+        .doc('posts/$postId')
+        .set(
+      {
+        'imageUrls': downloadUrl,
+      },
+      SetOptions(merge: true),
+    ).then((value) => {
+              Get.back(),
+              uploading = false,
+              update()
+            });
+  }
+
+// upload image to firebase storage function
+  @override
+  uploadImageToStorage(pickedFile, postId) async {
+    Reference reference = FirebaseStorage.instance
+        .ref()
+        .child(
+            'posts/$postId/${const Uuid().v4()}');
+    await reference.putData(
+      await pickedFile!.readAsBytes(),
+      SettableMetadata(contentType: 'image/jpeg'),
+    );
+    String value =
+        await reference.getDownloadURL();
+    downloadUrl.add(value);
   }
 }

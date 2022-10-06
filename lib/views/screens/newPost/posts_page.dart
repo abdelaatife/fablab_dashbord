@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fabdashboard/views/screens/newPost/newpost.dart';
+import 'package:fabdashboard/views/widgets/posts/header_post.dart';
+import 'package:fabdashboard/views/widgets/posts/imageviewer.dart';
+import 'package:fabdashboard/views/widgets/posts/textviewer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../controller/posts_controller.dart';
 import '../../../core/constant/style.dart';
 
@@ -27,7 +29,7 @@ class PostsPage extends StatelessWidget {
             InkWell(
               onTap: () {
                 Get.to(() => const NewPostPage(),
-                    duration: Duration(
+                    duration: const Duration(
                         milliseconds: 500),
                     transition:
                         Transition.rightToLeft,
@@ -84,11 +86,6 @@ class PostsPage extends StatelessWidget {
 
         body: Column(
           children: [
-            // header of home page
-            const Padding(
-              padding: EdgeInsets.only(left: 15),
-            ),
-
             Expanded(
               child: StreamBuilder<QuerySnapshot>(
                   stream: postsController
@@ -97,15 +94,47 @@ class PostsPage extends StatelessWidget {
                       AsyncSnapshot<QuerySnapshot>
                           snapshot) {
                     if (snapshot.hasError) {
-                      return const Text(
-                          'Something went wrong');
+                      return const Center(
+                        child: Text(
+                            'Something went wrong'),
+                      );
+                    }
+                    if (!snapshot.hasData) {
+                      return Center(
+                          child: Row(
+                        mainAxisAlignment:
+                            MainAxisAlignment
+                                .center,
+                        children: const [
+                          Icon(
+                            Icons
+                                .cloud_off_outlined,
+                            color: Colors.black,
+                            size: 30,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            'There is no post found you can create a new one',
+                            style: TextStyle(
+                                fontFamily:
+                                    AppText.light,
+                                fontSize: 16,
+                                color:
+                                    Colors.black),
+                          ),
+                        ],
+                      ));
                     }
 
                     if (snapshot
                             .connectionState ==
                         ConnectionState.waiting) {
-                      return const Text(
-                          "Loading");
+                      return const Center(
+                        child:
+                            CircularProgressIndicator(),
+                      );
                     }
 
                     return ListView(
@@ -115,24 +144,144 @@ class PostsPage extends StatelessWidget {
                           .map((DocumentSnapshot
                               document) {
                         Map<String, dynamic>
-                            data =
-                            document.data()!
+                            data = document.data()
                                 as Map<String,
                                     dynamic>;
                         return Container(
-                          width: Get.width,
-                          color: Colors.white,
-                          margin: const EdgeInsets
-                              .only(bottom: 10),
-                          padding:
-                              const EdgeInsets
-                                  .all(10),
-                          child: Column(
-                            children: [
-                              Text(data['title']),
-                            ],
-                          ),
-                        );
+                            decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors
+                                        .grey
+                                        .withOpacity(
+                                            .5),
+                                    spreadRadius:
+                                        1,
+                                    blurRadius: 1,
+                                    offset:
+                                        const Offset(
+                                            0, 1),
+                                  ),
+                                ],
+                                color: Colors
+                                    .white,
+                                borderRadius:
+                                    BorderRadius
+                                        .circular(
+                                            10),
+                                border: Border.all(
+                                    color: Colors
+                                        .grey,
+                                    width: .5)),
+                            height: Get.height *
+                                .2,
+                            margin:
+                                EdgeInsets.all(Get
+                                        .width *
+                                    .01),
+                            padding:
+                                const EdgeInsets
+                                    .all(10),
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  height:
+                                      Get.height,
+                                  width:
+                                      Get.width *
+                                          .15,
+                                  child: AppPostImageViewer(
+                                      imageUrls: data[
+                                          'imageUrls']),
+                                ),
+                                SizedBox(
+                                  width:
+                                      Get.width *
+                                          .02,
+                                ),
+                                SizedBox(
+                                  width:
+                                      Get.width *
+                                          .06,
+                                  child:
+                                      AppHeaderPost(
+                                    name: data[
+                                            "personName"] ??
+                                        '',
+                                    title: data[
+                                            'title'] ??
+                                        '',
+                                    time: data[
+                                            'date'] ??
+                                        '',
+                                  ),
+                                ),
+                                SizedBox(
+                                  width:
+                                      Get.width *
+                                          .02,
+                                ),
+                                AppPostText(
+                                    text: data[
+                                        'description']),
+
+                                //delete button with confirmation dialog
+
+                                Expanded(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment
+                                            .end,
+                                    children: [
+                                      Center(
+                                        child:
+                                            IconButton(
+                                          onPressed:
+                                              () {
+                                            // ask for confirmation
+                                            // then delete
+                                            showDialog<
+                                                String>(
+                                              context:
+                                                  context,
+                                              builder: (BuildContext context) =>
+                                                  AlertDialog(
+                                                title: const Text('AlertDialog Title'),
+                                                content: const Text('AlertDialog description'),
+                                                actions: <Widget>[
+                                                  TextButton(
+                                                    onPressed: () => Navigator.pop(
+                                                      context,
+                                                    ),
+                                                    child: const Text('Cancel'),
+                                                  ),
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      postsController.deletePost(document.id);
+                                                    },
+                                                    child: const Text(
+                                                      'Delete',
+                                                      style: TextStyle(color: Colors.red),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                          },
+                                          icon:
+                                              const Icon(
+                                            Icons
+                                                .delete,
+                                            color:
+                                                Colors.red,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ));
                       }).toList(),
                     );
                   }),
@@ -140,4 +289,4 @@ class PostsPage extends StatelessWidget {
           ],
         ));
   }
-}
+} /* */
