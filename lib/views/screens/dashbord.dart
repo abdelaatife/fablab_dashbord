@@ -3,6 +3,7 @@ import 'package:fabdashboard/core/constant/style.dart';
 import 'package:fabdashboard/data/static/static.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:side_navigation/side_navigation.dart';
 
 class DashbordPage extends StatelessWidget {
@@ -76,12 +77,22 @@ class DashbordPage extends StatelessWidget {
                     shrinkIconColor:
                         AppColor.secondry,
                   ),
+
                   //divider theme section
                   dividerTheme:
                       SideNavigationBarDividerTheme(
                           showFooterDivider: true,
                           showHeaderDivider: true,
+                          mainDividerThickness: 1,
+                          mainDividerColor:
+                              Colors.black12,
                           showMainDivider: true),
+                ),
+                toggler: const SideBarToggler(
+                  expandIcon: Ionicons
+                      .chevron_forward_outline,
+                  shrinkIcon:
+                      Ionicons.chevron_back,
                 ),
                 selectedIndex:
                     controller.selectedIndex,

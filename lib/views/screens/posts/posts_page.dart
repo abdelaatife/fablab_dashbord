@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fabdashboard/views/screens/newPost/newpost.dart';
+import 'package:fabdashboard/views/screens/posts/newpost.dart';
 import 'package:fabdashboard/views/widgets/posts/header_post.dart';
 import 'package:fabdashboard/views/widgets/posts/imageviewer.dart';
 import 'package:fabdashboard/views/widgets/posts/textviewer.dart';
@@ -93,41 +93,50 @@ class PostsPage extends StatelessWidget {
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot>
                           snapshot) {
-                    if (snapshot.hasError) {
+                    if (!snapshot.hasData) {
                       return const Center(
-                        child: Text(
-                            'Something went wrong'),
+                        child:
+                            CircularProgressIndicator(),
                       );
                     }
-                    if (!snapshot.hasData) {
-                      return Center(
-                          child: Row(
-                        mainAxisAlignment:
-                            MainAxisAlignment
-                                .center,
-                        children: const [
-                          Icon(
-                            Icons
-                                .cloud_off_outlined,
-                            color: Colors.black,
-                            size: 30,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'There is no post found you can create a new one',
-                            style: TextStyle(
-                                fontFamily:
-                                    AppText.light,
-                                fontSize: 16,
-                                color:
-                                    Colors.black),
-                          ),
-                        ],
-                      ));
+                    if (snapshot.hasData) {
+                      if (snapshot.hasError) {
+                        return const Center(
+                          child: Text(
+                              'Something went wrong'),
+                        );
+                      }
+                      if (snapshot
+                          .data!.docs.isEmpty) {
+                        return Center(
+                            child: Row(
+                          mainAxisAlignment:
+                              MainAxisAlignment
+                                  .center,
+                          children: const [
+                            Icon(
+                              Icons
+                                  .cloud_off_outlined,
+                              color: Colors.black,
+                              size: 30,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              'There is no post found you can create a new one',
+                              style: TextStyle(
+                                  fontFamily:
+                                      AppText
+                                          .light,
+                                  fontSize: 16,
+                                  color: Colors
+                                      .black),
+                            ),
+                          ],
+                        ));
+                      }
                     }
-
                     if (snapshot
                             .connectionState ==
                         ConnectionState.waiting) {
@@ -191,8 +200,9 @@ class PostsPage extends StatelessWidget {
                                       Get.width *
                                           .15,
                                   child: AppPostImageViewer(
-                                      imageUrls: data[
-                                          'imageUrls']),
+                                      imageUrls:
+                                          data['imageUrls'] ??
+                                              []),
                                 ),
                                 SizedBox(
                                   width:

@@ -1,27 +1,33 @@
-import 'package:fabdashboard/views/screens/newPost/posts_page.dart';
+import 'package:fabdashboard/views/screens/posts/posts_page.dart';
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:side_navigation/side_navigation.dart';
 
 List<SideNavigationBarItem> items = const [
   SideNavigationBarItem(
-    icon: Icons.add_outlined,
-    label: 'New Post',
+    icon: Ionicons.document_text_outline,
+    label: 'Posts',
   ),
   SideNavigationBarItem(
-    icon: Icons.email_outlined,
-    label: 'New Notification',
+    icon: Ionicons.flask_outline,
+    label: 'Materials',
   ),
   SideNavigationBarItem(
-    icon: Icons.person_outline,
-    label: 'List of Students',
+    icon: Ionicons.send_outline,
+    label: 'Messages',
   ),
   SideNavigationBarItem(
-    icon: Icons.person,
-    label: 'List of Teachers',
+    icon: Ionicons.person_outline,
+    label: 'Students',
+  ),
+  SideNavigationBarItem(
+    icon: Ionicons.people_outline,
+    label: 'Teachers',
   ),
 ];
 List<Widget> screens = const [
   PostsPage(),
+  Center(child: Text('Materials')),
   Center(
     child: Text('New Notification'),
   ),
