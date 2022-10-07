@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fabdashboard/controller/materials/materilaspage_controller.dart';
 import 'package:fabdashboard/views/screens/materials/newmaterial.dart';
+import 'package:fabdashboard/views/widgets/material/materialcard.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -10,7 +13,11 @@ class MaterialsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MaterialsPageControllerImpl
+        materialsPageControllerImpl =
+        Get.put(MaterialsPageControllerImpl());
     return Scaffold(
+      // app bar section
       appBar: AppBar(
         title: const Text(
           'Materials',
@@ -75,6 +82,128 @@ class MaterialsPage extends StatelessWidget {
         ],
         elevation: .5,
         backgroundColor: AppColor.background,
+      ),
+
+      // body section end
+      body: LayoutBuilder(
+        builder: (BuildContext context,
+            BoxConstraints constraints) {
+          return Column(
+            children: [
+              Expanded(
+                child: StreamBuilder<
+                        QuerySnapshot>(
+                    stream:
+                        materialsPageControllerImpl
+                            .collectionStream,
+                    builder:
+                        (BuildContext context,
+                            AsyncSnapshot<
+                                    QuerySnapshot>
+                                snapshot) {
+                      if (!snapshot.hasData) {
+                        return const Center(
+                          child:
+                              CircularProgressIndicator(),
+                        );
+                      }
+                      if (snapshot.hasData) {
+                        if (snapshot.hasError) {
+                          return const Center(
+                            child: Text(
+                                'Something went wrong'),
+                          );
+                        }
+                        if (snapshot
+                            .data!.docs.isEmpty) {
+                          return Center(
+                              child: Row(
+                            mainAxisAlignment:
+                                MainAxisAlignment
+                                    .center,
+                            children: const [
+                              Icon(
+                                Icons
+                                    .cloud_off_outlined,
+                                color:
+                                    Colors.black,
+                                size: 30,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                'There is no materials yet, you can add new material',
+                                style: TextStyle(
+                                    fontFamily:
+                                        AppText
+                                            .light,
+                                    fontSize: 16,
+                                    color: Colors
+                                        .black),
+                              ),
+                            ],
+                          ));
+                        }
+                      }
+                      if (snapshot
+                              .connectionState ==
+                          ConnectionState
+                              .waiting) {
+                        return const Center(
+                          child:
+                              CircularProgressIndicator(),
+                        );
+                      }
+
+                      return GridView(
+                        gridDelegate:
+                            SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: constraints
+                                      .maxWidth >
+                                  1300
+                              ? 6
+                              : constraints
+                                          .maxWidth >
+                                      820
+                                  ? 4
+                                  : constraints
+                                              .maxWidth >
+                                          620
+                                      ? 3
+                                      : constraints.maxWidth >
+                                              450
+                                          ? 2
+                                          : 1,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
+                        ),
+                        padding: EdgeInsets.zero,
+                        children: snapshot
+                            .data!.docs
+                            .map((DocumentSnapshot
+                                document) {
+                          Map<String, dynamic>
+                              data =
+                              document.data()
+                                  as Map<String,
+                                      dynamic>;
+                          return AppMaterialCard(
+                            image:
+                                data['imageUrls'],
+                            title:
+                                data['material'],
+                            description: data[
+                                'materialdescription'],
+                            id: document.id,
+                          );
+                        }).toList(),
+                      );
+                    }),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

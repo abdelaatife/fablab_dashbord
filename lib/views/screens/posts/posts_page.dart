@@ -256,8 +256,8 @@ class PostsPage extends StatelessWidget {
                                                   context,
                                               builder: (BuildContext context) =>
                                                   AlertDialog(
-                                                title: const Text('AlertDialog Title'),
-                                                content: const Text('AlertDialog description'),
+                                                title: const Text('Delete Post'),
+                                                content: const Text(' Are you sure you want to delete this post?'),
                                                 actions: <Widget>[
                                                   TextButton(
                                                     onPressed: () => Navigator.pop(

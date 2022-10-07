@@ -1,8 +1,8 @@
+import 'package:fabdashboard/views/screens/dashbord.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
 import 'firebase_options.dart';
-import 'views/screens/materials/materials_page.dart';
 
 // ...
 
@@ -21,11 +21,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
         //initialRoute: '/Dashborde',
-        title: 'Flutter Demo',
+        title: 'FabLab Dashboard',
         theme: ThemeData(
           fontFamily: 'Poppins',
         ),
         debugShowCheckedModeBanner: false,
-        home: const MaterialsPage());
+        home: const DashbordPage());
   }
 }

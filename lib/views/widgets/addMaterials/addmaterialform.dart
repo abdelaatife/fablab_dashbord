@@ -65,6 +65,7 @@ class AppAddMaterialForm extends StatelessWidget {
                               controller:
                                   addMaterialControllerImpl
                                       .materialController,
+                              maxLength: 20,
                               label:
                                   "Material Name",
                               icon: Icons.person,
@@ -126,6 +127,7 @@ class AppAddMaterialForm extends StatelessWidget {
                               controller:
                                   addMaterialControllerImpl
                                       .materialController,
+                              maxLength: 20,
                               label:
                                   "Material Name",
                               icon: Icons.person,
