@@ -1,3 +1,4 @@
+import 'package:fabdashboard/views/screens/materials/materials_page.dart';
 import 'package:fabdashboard/views/screens/posts/posts_page.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
@@ -27,7 +28,7 @@ List<SideNavigationBarItem> items = const [
 ];
 List<Widget> screens = const [
   PostsPage(),
-  Center(child: Text('Materials')),
+  MaterialsPage(),
   Center(
     child: Text('New Notification'),
   ),

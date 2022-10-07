@@ -17,8 +17,6 @@ abstract class FilepickerController
   File? file;
   PickedFile? pickedFile;
   bool uploading = false;
-  // uuid generator
-  String? pId = const Uuid().v4();
   // bool uploading
   bool isUploading = false;
   //function to select image and add it to firebase storage

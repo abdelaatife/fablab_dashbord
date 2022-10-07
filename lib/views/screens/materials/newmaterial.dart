@@ -1,23 +1,26 @@
-import 'package:fabdashboard/controller/posts/fillepicker_post_controller.dart';
+import 'package:fabdashboard/controller/materials/fillepicker_material_controller.dart';
 import 'package:fabdashboard/core/constant/style.dart';
-import 'package:fabdashboard/views/widgets/addpost/addpostform.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class NewPostPage extends StatelessWidget {
-  const NewPostPage({Key? key}) : super(key: key);
+import '../../widgets/addMaterials/addmaterialform.dart';
+
+class NewMaterials extends StatelessWidget {
+  const NewMaterials({Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    FilepickerControllerImpl
-        filepickerController =
-        Get.put(FilepickerControllerImpl());
+    FilepickerMaterialControllerImpl
+        filepickerMaterialControllerImpl =
+        Get.put(
+            FilepickerMaterialControllerImpl());
     return Scaffold(
         appBar: AppBar(
           iconTheme: const IconThemeData(
               color: Colors.black),
           title: const Text(
-            'New Post',
+            'New Material',
             style: TextStyle(
                 fontFamily: AppText.light,
                 color: Colors.black),
@@ -28,8 +31,9 @@ class NewPostPage extends StatelessWidget {
         ),
         body: SingleChildScrollView(
           child: GetBuilder<
-              FilepickerControllerImpl>(
-            init: filepickerController,
+              FilepickerMaterialControllerImpl>(
+            init:
+                filepickerMaterialControllerImpl,
             builder: (controller) {
               return Padding(
                   padding: EdgeInsets.all(
@@ -50,7 +54,7 @@ class NewPostPage extends StatelessWidget {
                                   Expanded(
                                       child: Center(
                                           child: Image.asset(
-                                    "assets/images/newpost.png",
+                                    "assets/images/material.png",
                                     height:
                                         Get.height *
                                             .7,
@@ -58,7 +62,7 @@ class NewPostPage extends StatelessWidget {
                                         Get.width *
                                             .7,
                                   ))),
-                                  const AppAddPostForm(),
+                                  const AppAddMaterialForm(),
                                 ],
                               );
                       } else {
@@ -70,11 +74,11 @@ class NewPostPage extends StatelessWidget {
                               )
                             : Row(
                                 children: [
-                                  const AppAddPostForm(),
+                                  const AppAddMaterialForm(),
                                   Expanded(
                                       child: Center(
                                           child: Image.asset(
-                                    "assets/images/newpost.png",
+                                    "assets/images/material.png",
                                     height:
                                         Get.height *
                                             .7,

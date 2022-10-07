@@ -1,19 +1,21 @@
-import 'package:fabdashboard/controller/posts/fillepicker_post_controller.dart';
+import 'package:fabdashboard/controller/materials/fillepicker_material_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../core/constant/style.dart';
 
-class AppImagePicker extends StatelessWidget {
-  const AppImagePicker({Key? key})
+class AppImagePickerMaterial
+    extends StatelessWidget {
+  const AppImagePickerMaterial({Key? key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    FilepickerControllerImpl
-        filepickerController =
-        Get.put(FilepickerControllerImpl());
-    return GetBuilder<FilepickerControllerImpl>(
+    FilepickerMaterialControllerImpl
+        filepickerController = Get.put(
+            FilepickerMaterialControllerImpl());
+    return GetBuilder<
+            FilepickerMaterialControllerImpl>(
         init: filepickerController,
         builder: ((controller) {
           return controller.isSelected
@@ -25,7 +27,8 @@ class AppImagePicker extends StatelessWidget {
                         MainAxisAlignment.center,
                     children: [
                       Text(
-                        "${controller.itemImagesList.length} Images",
+                        controller
+                            .itemImages!.name,
                         textAlign:
                             TextAlign.center,
                         style: const TextStyle(

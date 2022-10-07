@@ -4,13 +4,14 @@ import 'package:flutter/material.dart';
 class AppInputForm extends StatelessWidget {
   final TextEditingController? controller;
   final String? label, helper;
-  final int? maxLines, minLines;
+  final int? maxLines, minLines, maxLength;
   final IconData? icon;
 
   const AppInputForm(
       {Key? key,
       this.controller,
       required this.label,
+      this.maxLength,
       this.maxLines,
       this.minLines,
       this.helper,
@@ -42,6 +43,7 @@ class AppInputForm extends StatelessWidget {
               controller: controller,
               maxLines: maxLines,
               minLines: minLines,
+              maxLength: maxLength,
               style: const TextStyle(
                 fontFamily: AppText.light,
               ),

@@ -1,9 +1,10 @@
-import 'package:fabdashboard/controller/addpost_controller.dart';
+import 'package:fabdashboard/controller/posts/addpost_controller.dart';
 import 'package:fabdashboard/views/widgets/addpost/coustembutton.dart';
 import 'package:fabdashboard/views/widgets/addpost/imagepicker.dart';
 import 'package:fabdashboard/views/widgets/addpost/inputform.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ionicons/ionicons.dart';
 
 import '../../../core/constant/style.dart';
 
@@ -65,7 +66,8 @@ class AppAddPostForm extends StatelessWidget {
                                   addPostController
                                       .usernameController,
                               label: "User Name",
-                              icon: Icons.person,
+                              icon: Ionicons
+                                  .person_outline,
                               helper:
                                   "Enter the name of the project manager",
                             ),
@@ -75,8 +77,8 @@ class AppAddPostForm extends StatelessWidget {
                                       .titleController,
                               label:
                                   "Project Name",
-                              icon: Icons
-                                  .factory_outlined,
+                              icon: Ionicons
+                                  .rocket_outline,
                               helper:
                                   "Enter project name",
                             ),
@@ -125,8 +127,8 @@ class AppAddPostForm extends StatelessWidget {
                                         .usernameController,
                                 label:
                                     "User Name",
-                                icon:
-                                    Icons.person,
+                                icon: Ionicons
+                                    .person_outline,
                                 helper:
                                     "Enter the name of the project manager",
                               ),
@@ -136,8 +138,8 @@ class AppAddPostForm extends StatelessWidget {
                                         .titleController,
                                 label:
                                     "Project Name",
-                                icon: Icons
-                                    .factory_outlined,
+                                icon: Ionicons
+                                    .rocket_outline,
                                 helper:
                                     "Enter project name",
                               ),
@@ -157,7 +159,8 @@ class AppAddPostForm extends StatelessWidget {
               controller: addPostController
                   .descriptionController,
               label: "Description",
-              icon: Icons.description_outlined,
+              icon:
+                  Ionicons.document_text_outline,
               maxLines: 5,
               helper: "Enter the Discription",
             ),

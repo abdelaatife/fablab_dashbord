@@ -1,85 +1,78 @@
-import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fabdashboard/controller/fillepicker_controller.dart';
+import 'package:fabdashboard/controller/materials/fillepicker_material_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
 
-abstract class AddPostController
+abstract class AddMaterialController
     extends GetxController {
   // add post  form controller
-  TextEditingController titleController =
+  TextEditingController materialController =
       TextEditingController();
-  TextEditingController descriptionController =
-      TextEditingController();
-  TextEditingController usernameController =
+  TextEditingController
+      materialdescriptionController =
       TextEditingController();
 
   // firebase firestore variables
   FirebaseFirestore firestore =
       FirebaseFirestore.instance;
   // file picker controller variable
-  FilepickerControllerImpl filepickerController =
-      Get.put(FilepickerControllerImpl());
+  FilepickerMaterialControllerImpl
+      filepickerMaterialControllerImpl =
+      Get.put(FilepickerMaterialControllerImpl());
 
   // uuid generator
-  String? postId = const Uuid().v4();
+  String? materialtId = const Uuid().v4();
   // color variables for posts
-  List<String> color = [
-    "BV",
-    "BS",
-    "BP",
-    "BE",
-    "BM"
-  ];
-  final _random = Random();
 
 // function to add post to firebase firestore
   uploadData();
   validateData();
 }
 
-class AddPostControllerImpl
-    extends AddPostController {
+class AddMaterialControllerImpl
+    extends AddMaterialController {
   // initialize text editing controllers
   @override
   void onInit() {
-    titleController = TextEditingController();
-    descriptionController =
+    materialController = TextEditingController();
+    materialdescriptionController =
         TextEditingController();
-    usernameController = TextEditingController();
+
     super.onInit();
   }
 
 // dispose text editing controllers
   @override
   void dispose() {
-    titleController.dispose();
-    descriptionController.dispose();
-    usernameController.dispose();
+    materialController.dispose();
+    materialdescriptionController.dispose();
+
     super.dispose();
   }
 
   // validate post data
   @override
   validateData() async {
-    filepickerController.isUploading = true;
+    filepickerMaterialControllerImpl.isUploading =
+        true;
     update();
-    if (titleController.text.isEmpty ||
-        descriptionController.text.isEmpty ||
-        usernameController.text.isEmpty) {
-      filepickerController.isUploading = false;
+    if (materialController.text.isEmpty ||
+        materialdescriptionController
+            .text.isEmpty) {
+      filepickerMaterialControllerImpl
+          .isUploading = false;
       update();
       Get.snackbar(
           'Error', 'Please fill all fields',
           snackPosition: SnackPosition.TOP,
           backgroundColor: Colors.red,
           colorText: Colors.white);
-    } else if (filepickerController
-        .itemImagesList.isEmpty) {
-      filepickerController.isUploading = false;
+    } else if (!filepickerMaterialControllerImpl
+        .isSelected) {
+      filepickerMaterialControllerImpl
+          .isUploading = false;
       update();
       Get.snackbar('Error', 'Please select image',
           snackPosition: SnackPosition.TOP,
@@ -93,20 +86,17 @@ class AddPostControllerImpl
 // upload post to firebase firestore
   @override
   uploadData() {
-    var users = FirebaseFirestore.instance
-        .doc('posts/$postId')
+    FirebaseFirestore.instance
+        .doc('materials/$materialtId')
         .set({
-      "personName": usernameController.text,
-      'title': titleController.text,
-      'description': descriptionController.text,
-      'date': DateTime.now(),
-      "likes": 0,
-      'color':
-          color[_random.nextInt(color.length)],
+      'material': materialController.text,
+      'materialdescription':
+          materialdescriptionController.text,
     }).then((value) {
       // after uploading post data upload images to firebase storage
-      filepickerController
-          .uplaodImageAndSaveItemInfo(postId!);
+      filepickerMaterialControllerImpl
+          .uplaodImageAndSaveItemInfo(
+              materialtId!);
     }).catchError((error) {
       Get.snackbar(
           'Error',

@@ -27,6 +27,7 @@ class PostsControllerImpl
   deletePost(String postId) async {
     //delete post from firebase storage
     await storageRef.child(postId).listAll().then(
+          // ignore: avoid_function_literals_in_foreach_calls
           (value) => value.items.forEach(
             (element) {
               element.delete();
