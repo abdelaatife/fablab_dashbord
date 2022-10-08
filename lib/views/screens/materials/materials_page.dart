@@ -125,8 +125,8 @@ class MaterialsPage extends StatelessWidget {
                               Icon(
                                 Icons
                                     .cloud_off_outlined,
-                                color:
-                                    Colors.black,
+                                color: Colors
+                                    .black54,
                                 size: 30,
                               ),
                               SizedBox(
@@ -140,7 +140,7 @@ class MaterialsPage extends StatelessWidget {
                                             .light,
                                     fontSize: 16,
                                     color: Colors
-                                        .black),
+                                        .black54),
                               ),
                             ],
                           ));

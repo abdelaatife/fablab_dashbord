@@ -6,14 +6,15 @@ import '../../../core/constant/style.dart';
 class AppCusstomButton extends StatelessWidget {
   final String label;
   final void Function() onTap;
-  final Color color, textColor;
+  final Color? color, textColor, borderColor;
 
   const AppCusstomButton(
       {Key? key,
       required this.label,
       required this.onTap,
       required this.color,
-      required this.textColor})
+      required this.textColor,
+      this.borderColor})
       : super(key: key);
 
   @override
@@ -25,7 +26,8 @@ class AppCusstomButton extends StatelessWidget {
           width: Get.width * .08,
           decoration: BoxDecoration(
               border: Border.all(
-                  color: AppColor.secondry),
+                  color: borderColor ??
+                      AppColor.secondry),
               borderRadius:
                   BorderRadius.circular(10),
               color: color),

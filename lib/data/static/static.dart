@@ -1,5 +1,6 @@
 import 'package:fabdashboard/views/screens/materials/materials_page.dart';
 import 'package:fabdashboard/views/screens/posts/posts_page.dart';
+import 'package:fabdashboard/views/screens/students/studentspage.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:side_navigation/side_navigation.dart';
@@ -32,9 +33,7 @@ List<Widget> screens = const [
   Center(
     child: Text('New Notification'),
   ),
-  Center(
-    child: Text('List of Students'),
-  ),
+  StudentsPage(),
   Center(
     child: Text('List of Teachers'),
   ),
