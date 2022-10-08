@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fabdashboard/controller/students/studentaction_controller.dart';
 import 'package:fabdashboard/core/constant/style.dart';
 import 'package:fabdashboard/views/widgets/addpost/coustembutton.dart';
 import 'package:fabdashboard/views/widgets/students/documentpage.dart';
@@ -7,13 +8,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:jiffy/jiffy.dart';
+import 'package:rotated_corner_decoration/rotated_corner_decoration.dart';
 
 class AppStudentCard extends StatelessWidget {
   final String name,
+      id,
       year,
       card,
       phone,
       techid,
+      status,
       url;
   final Timestamp date;
   const AppStudentCard({
@@ -25,11 +29,34 @@ class AppStudentCard extends StatelessWidget {
     required this.techid,
     required this.url,
     required this.date,
+    required this.id,
+    required this.status,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    StudentActionControllerImpl
+        studentActionController =
+        Get.put(StudentActionControllerImpl());
     return Container(
+      foregroundDecoration:
+          RotatedCornerDecoration(
+        color: status == 'Approved'
+            ? Colors.green
+            : status == 'waiting'
+                ? AppColor.secondry
+                : Colors.red,
+        geometry: const BadgeGeometry(
+            width: 64, height: 64),
+        textSpan: TextSpan(
+          text: status,
+          style: const TextStyle(
+              fontFamily: AppText.light,
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+              color: Colors.white),
+        ),
+      ),
       padding: const EdgeInsets.all(15),
       margin: const EdgeInsets.all(5),
       decoration: BoxDecoration(
@@ -113,7 +140,7 @@ class AppStudentCard extends StatelessWidget {
                   height: 10,
                 ),
                 AppStudentPageTextElement(
-                    title: 'Phone Number',
+                    title: 'Phone Numbe',
                     text: phone,
                     icon: Ionicons.call),
               ],
@@ -134,24 +161,35 @@ class AppStudentCard extends StatelessWidget {
               ],
             ),
           ),
-          Expanded(
-            child: Row(
-              children: [
-                AppCusstomButton(
-                    label: 'Reject',
-                    onTap: () {},
-                    color: Colors.white,
-                    borderColor: Colors.red,
-                    textColor: Colors.red),
-                AppCusstomButton(
-                    label: 'Accept',
-                    onTap: () {},
-                    color: Colors.green,
-                    borderColor: Colors.green,
-                    textColor: Colors.white)
-              ],
-            ),
-          )
+          status == "waiting"
+              ? Expanded(
+                  child: Row(
+                    children: [
+                      AppCusstomButton(
+                          label: 'Reject',
+                          onTap: () {
+                            studentActionController
+                                .movetorejected(
+                                    id);
+                          },
+                          color: Colors.white,
+                          borderColor: Colors.red,
+                          textColor: Colors.red),
+                      AppCusstomButton(
+                          label: 'Accept',
+                          onTap: () {
+                            studentActionController
+                                .movetoapproved(
+                                    id);
+                          },
+                          color: Colors.green,
+                          borderColor:
+                              Colors.green,
+                          textColor: Colors.white)
+                    ],
+                  ),
+                )
+              : Container(),
         ],
       ),
     );

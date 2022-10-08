@@ -18,6 +18,7 @@ abstract class StudentPageController
   final Stream<QuerySnapshot> collectionStream =
       FirebaseFirestore.instance
           .collection('Students')
+          .orderBy("status", descending: true)
           .snapshots();
   deletePost(String postId);
 }

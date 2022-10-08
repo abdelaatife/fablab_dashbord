@@ -159,6 +159,7 @@ class StudentsPage extends StatelessWidget {
                                     as Map<String,
                                         dynamic>;
                             return AppStudentCard(
+                              id: document.id,
                               name: data[
                                   'fullname'],
                               year: data['year'],
@@ -171,6 +172,8 @@ class StudentsPage extends StatelessWidget {
                               url:
                                   data['fileUrl'],
                               date: data['date'],
+                              status:
+                                  data['status'],
                             );
                           }).toList(),
                         ),
