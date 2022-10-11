@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 
@@ -79,7 +80,7 @@ class StudentActionControllerImpl
           headers: <String, String>{
             "Content-Type": "application/json",
             "Authorization":
-                'Key=AAAA3R61kOg:APA91bGv0YZhHUUa7fo_OK3LcMxt3nlTJb9gt-GcBJc-d7Np86otRJ6rXVNR9l9Jpld9gca76HXddm050BLoqc8EVqJsDNtBI0ANIRAcRG1kO7eruM5HUbc0V2wOowcMEgRP_XuK_EOT'
+                dotenv.env['messagingapi']!,
           },
           body: jsonEncode(<String, dynamic>{
             "notification": <String, dynamic>{
