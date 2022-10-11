@@ -189,7 +189,64 @@ class AppStudentCard extends StatelessWidget {
                     ],
                   ),
                 )
-              : Container(),
+              : status == "Rejected"
+                  ? Expanded(
+                      child: Row(
+                        children: [
+                          AppCusstomButton(
+                              label: 'Waiting',
+                              onTap: () {
+                                studentActionController
+                                    .movetowaiting(
+                                        id);
+                              },
+                              color: Colors.white,
+                              textColor: AppColor
+                                  .secondry),
+                          AppCusstomButton(
+                              label: 'Accept',
+                              onTap: () {
+                                studentActionController
+                                    .movetoapproved(
+                                        id);
+                              },
+                              color: Colors.green,
+                              borderColor:
+                                  Colors.green,
+                              textColor:
+                                  Colors.white)
+                        ],
+                      ),
+                    )
+                  : Expanded(
+                      child: Row(
+                        children: [
+                          AppCusstomButton(
+                              label: 'Reject',
+                              onTap: () {
+                                studentActionController
+                                    .movetorejected(
+                                        id);
+                              },
+                              color: Colors.white,
+                              borderColor:
+                                  Colors.red,
+                              textColor:
+                                  Colors.red),
+                          AppCusstomButton(
+                              label: 'Waiting',
+                              onTap: () {
+                                studentActionController
+                                    .movetowaiting(
+                                        id);
+                              },
+                              color: AppColor
+                                  .secondry,
+                              textColor:
+                                  Colors.white)
+                        ],
+                      ),
+                    )
         ],
       ),
     );

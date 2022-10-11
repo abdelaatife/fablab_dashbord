@@ -3,6 +3,7 @@ import 'package:fabdashboard/controller/students/studentspage_controller.dart';
 import 'package:fabdashboard/views/widgets/students/studentcard.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../core/constant/style.dart';
 
@@ -66,9 +67,29 @@ class StudentsPage extends StatelessWidget {
                                     QuerySnapshot>
                                 snapshot) {
                       if (!snapshot.hasData) {
-                        return const Center(
-                          child:
-                              CircularProgressIndicator(),
+                        return GridView.builder(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 5,
+                          ),
+                          itemCount: 20,
+                          itemBuilder:
+                              (BuildContext
+                                      context,
+                                  int index) {
+                            return Shimmer.fromColors(
+                                baseColor: const Color
+                                        .fromARGB(
+                                    255,
+                                    218,
+                                    218,
+                                    218),
+                                highlightColor:
+                                    Colors
+                                        .black38,
+                                child:
+                                    const Card());
+                          },
                         );
                       }
                       if (snapshot.hasData) {
