@@ -1,6 +1,8 @@
 import 'package:fabdashboard/views/screens/materials/materials_page.dart';
+import 'package:fabdashboard/views/screens/messages/sendmessage.dart';
 import 'package:fabdashboard/views/screens/posts/posts_page.dart';
 import 'package:fabdashboard/views/screens/students/studentspage.dart';
+import 'package:fabdashboard/views/screens/teachers/teachers.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:side_navigation/side_navigation.dart';
@@ -30,11 +32,7 @@ List<SideNavigationBarItem> items = const [
 List<Widget> screens = const [
   PostsPage(),
   MaterialsPage(),
-  Center(
-    child: Text('New Notification'),
-  ),
+  SendMessage(),
   StudentsPage(),
-  Center(
-    child: Text('List of Teachers'),
-  ),
+  TeachersPage()
 ];
